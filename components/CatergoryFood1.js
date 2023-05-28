@@ -1,38 +1,50 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function CategoryFood({scr, name, index, onPress}){
+export default function CategoryFood({item, index, onPress}){
+    
     return(
-        <View style={styles.container}>
-            <TouchableOpacity onPress={onPress}>
-            <Image style={styles.image} source={scr}/>
-            <Text style={styles.text}>{name}</Text>
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity>
+  <View style={styles.container}>
+  
+  <View style={styles.wrapContainer}>
+  <View style={styles.textContainer}>
+  <Text style={styles.text}>{item.name}</Text>
+  <Text style={styles.text}>{index}</Text></View>
+  </View>
+  <Image source={item.scr} style={styles.img}/>
+  </View>
+  </TouchableOpacity>
     )
 }
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#DDDDDD',
-        height: 150,
-        width: 150,
-        borderRadius: 20,
-        marginTop: 10,
-        marginBottom: 5,
-        marginLeft: CategoryFood.index % 2 != 0 ? 10 : 0,
-        marginRight: CategoryFood.index % 2 == 0 ? 0 : 10,
-        elevation: 15
+    img:{
+      
+      height: 60,
+      width: 60,
+      borderRadius: 40,
+      position: 'absolute',
+      left: 50
     },
-    image: {
-        width: '100%',
-        height: 100,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20
+    wrapContainer:{
+      height: 90,
+      backgroundColor: 'grey',
+      width: 200,
+      marginLeft: 50,
+      justifyContent: 'center',
+      borderRadius: 20,
+    },
+    textContainer:{
+      flex: 1,
+      justifyContent: 'center'
+    },
+    container:{
+      height: 200,
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     text: {
-        textAlign: 'center',
-        fontSize: 20,
-        marginTop: 10
+      marginLeft: 20,
+      justifyContent:'center'
     }
-})
+  })

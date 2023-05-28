@@ -11,7 +11,7 @@ export default function HomeScreen() {
     var recommendedMeals = [require('../assets/images/breakfast.png'), require('../assets/images/lunch.jpg'), require('../assets/images/dinner.jpg')];
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-            <View style={styles.FoodSession}>
+            <View style={styles.foodSession}>
                 <Text style={{
                     fontSize: 16,
                     color: 'black',
@@ -25,7 +25,7 @@ export default function HomeScreen() {
                     renderItem={({ item }) => (<RecommendedFood scr={item}></RecommendedFood>)}>
                 </FlatList>
             </View>
-            <View style={styles.FoodSession}>
+            <View style={styles.foodSession}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{
                         fontSize: 16,
@@ -45,7 +45,7 @@ export default function HomeScreen() {
                     renderItem={({ item }) => (<FoodCategoryBanner scr={item}></FoodCategoryBanner>)}>
                 </FlatList>
             </View>
-            <View style={styles.FoodSession}>
+            <View style={styles.foodSession}>
                 <Text style={{
                     fontSize: 20,
                     color: 'black',
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         marginTop: 50,
         marginBottom: 10,
     },
-    FoodSession: {
+    foodSession: {
         marginTop: 7,
         marginBottom: 15,
     }

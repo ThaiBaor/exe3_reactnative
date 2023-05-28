@@ -3,7 +3,8 @@ import Food from "../components/Food";
 import {Text, FlatList } from "react-native";
 
 
-export default function ListFood({navigation}){
+export default function ListFood({navigation, id_category}){
+    
     var listFood = [
         {
             name: "Chicken burger",

@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 export default function CategoryFood({scr, name, index, onPress}){
+    
     return(
         <View style={styles.container}>
             <TouchableOpacity onPress={onPress}>
