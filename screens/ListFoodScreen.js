@@ -1,11 +1,30 @@
 import React from "react";
 import Food from "../components/Food";
-import {Text, FlatList } from "react-native";
+import { useState, useEffect } from "react";
+import { ActivityIndicator, FlatList, View } from "react-native";
 
 
-export default function ListFood({navigation, id_category}){
-    
-    var listFood = [
+export default function ListFood({ navigation, id_category }) {
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+
+    const getData = async () => {
+        try {
+            alert("Fetching");
+            const response = await fetch('http://192.168.2.23:3000/food');
+            const json = await response.json();
+            setData(json.data);
+            alert("Complete fetching")
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+    useEffect(() => {
+        getData();
+    }, []);
+    /*var listFood = [
         {
             name: "Chicken burger",
             price: "70000",
@@ -31,9 +50,13 @@ export default function ListFood({navigation, id_category}){
             price: "80000",
             image: require('../assets/images/bbq_burger.jpg')
         },
-    ];
-    return(
-        <FlatList data={listFood} renderItem={({item})=><Food item={item}></Food>}>
-        </FlatList>
+    ];*/
+    return (
+        <View>
+            {isLoading ? (<ActivityIndicator />) : (
+            <FlatList data={data} renderItem={({ item }) => <Food item={item}></Food>}>
+            </FlatList>)}
+        </View>
+
     )
 }
