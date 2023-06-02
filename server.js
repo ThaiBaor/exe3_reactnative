@@ -51,7 +51,7 @@ app.put('/update', function(req, res){
     let description = req.query.description;
     let id_category = req.query.id_category;
     let image = req.query.image;
-    dbcon.query('update tbmonhoc set name=?, price=?, description=?, id_category=?, image=? where id_food=?',[name, price, description, id_category, image, id_food ], function(err, result){
+    dbcon.query('update food set name=?, price=?, description=?, id_category=?, image=? where id_food=?',[name, price, description, id_category, image, id_food ], function(err, result){
         if(err) throw err;
         return res.send({data:result, message:"Updated"})
     })
