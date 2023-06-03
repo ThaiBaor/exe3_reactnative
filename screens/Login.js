@@ -9,17 +9,47 @@ import {
     Image,
     ScrollView,
 } from 'react-native';
+import axios from 'axios';
+import Constants from "expo-constants";
+const { manifest } = Constants;
+const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 
 export default function Login() {
     const navigation = useNavigation();
 
-    const [email, setEmail] = useState();
-    const [pass, setPass] = useState();
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+
+    let getUser = async () => {
+        // Gửi yêu cầu đăng nhập đến API
+        axios.post(`${uri}/login`, null, {
+            params: {
+                email: email,
+                pass: pass
+            }
+        })
+            .then(response => {
+                // Xử lý phản hồi từ API sau khi đăng nhập thành công
+                alert('Đăng nhập thành công');
+            })
+            .catch(error => {
+                // Xử lý lỗi khi đăng nhập không thành công
+                console.log(error);
+                alert('Đăng nhập thất bại\nVui lòng kiểm tra lại tên đăng nhập và mật khẩu.');
+            });
+    };
 
     login = () => {
+        if (email == '' && pass == '') {
+            alert('Bạn chưa nhập email và password\nVui lòng kiểm tra lại tên đăng nhập và mật khẩu.');
+        } else {
+            getUser();
+        }
+
         setEmail('');
         setPass('');
-        alert('Email: ' + email + ' | Pass: ' + pass);
+
+        navigation.navigate('Home')
     };
     forgotPass = () => {
         navigation.navigate('ForgotPass')

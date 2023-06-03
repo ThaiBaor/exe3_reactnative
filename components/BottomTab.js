@@ -4,10 +4,6 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import { FoodStackScreen } from "./NativeStack";
 
-import Login from "../screens/Login";
-import Signin from "../screens/Signin";
-import Forgot from "../screens/ForgotPass";
-
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
     return (
@@ -44,20 +40,6 @@ const Tabs = () => {
             }
             }></Tab.Screen>
             <Tab.Screen name="Cart" component={HomeScreen} options={{
-                tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactivecart.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activecart.png')} style={{ width: 25, height: 25 }}></Image>)
-            }
-            }></Tab.Screen>
-
-            {/* Đăng ký, Đăng nhập, Quên Mật khẩu */}
-            <Tab.Screen name="Login" component={Login} options={{
-                tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactiveuser.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activeuser.png')} style={{ width: 25, height: 25 }}></Image>)
-            }
-            }></Tab.Screen>
-            <Tab.Screen name="Signin" component={Signin} options={{
-                tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactivecart.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activecart.png')} style={{ width: 25, height: 25 }}></Image>)
-            }
-            }></Tab.Screen>
-            <Tab.Screen name="Fogot" component={Forgot} options={{
                 tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactivecart.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activecart.png')} style={{ width: 25, height: 25 }}></Image>)
             }
             }></Tab.Screen>

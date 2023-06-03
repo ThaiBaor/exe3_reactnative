@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
+    ActivityIndicator,
     Text,
     View,
     StyleSheet,
@@ -14,55 +15,78 @@ import Constants from "expo-constants";
 const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 
-export default function Signin({ route }) {
+export default function Signin() {
     const navigation = useNavigation();
 
+    // const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
-    const [name, setName] = useState();
-    const [email, setEmail] = useState();
-    const [phone, setPhone] = useState();
-    const [pass, setPass] = useState();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [pass, setPass] = useState('');
 
-    let getUser = async () => {
-        try {
-            data = { name: name, email: email, phone: phone, pass: pass }
-            const response = await fetch(`${uri}/them`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
+    const newUser = () => {
+        let admin = 0;
+        // Gửi yêu cầu POST đến API để lưu user mới
+        axios.post(`${uri}/them`, null, {
+            params: {
+                name: name,
+                password: pass,
+                phone: phone,
+                email: email,
+                admin: admin
+            }
+        })
+            .then(response => {
+                console.log('User saved successfully:', response.data);
+                // Thực hiện các hành động sau khi user được lưu thành công
+                navigation.navigate('Login')
+            })
+            .catch(error => {
+                console.error('Error saving User:', error);
+                // Xử lý lỗi nếu có
             });
-            const json = await response.json();
-            setData(json.data);
+    };
+
+    let checkEmail = async () => {
+        try {
+            const newdata = { email: email }
+            const response = await fetch(`${uri}/email`, {
+                method  : 'POST',
+                headers : {
+                    'Content-Type'  : 'application/json',
+                    'Accept'        : 'application/json'
+                },
+                body    : JSON.stringify(newdata)
+            }).then(res => {
+                console.log(res.data);
+            });
+            // const json = await response.json();
+            // setData(json.data);
+
         } catch (error) {
             console.error(error);
-        } finally {
-            setLoading(false);
         }
     };
 
-    useEffect(() => {
-        getUser();
-    }, []);
-
     signup = () => {
+        // checkEmail();
+        // for (let i = 0; i < data.length; i++) {
+        //     const element = data[i];
+        //     alert(element);
+        // }
+
+        if (name == '' && email == '' && pass == '' && phone == '') {
+            alert('Bạn chưa điền thông tin\nVui lòng kiểm tra lại tên đăng nhập và mật khẩu.');
+        } else {
+            newUser();
+        }
+
         setName('')
         setEmail('')
         setPhone('')
         setPass('')
-        alert(
-            'Name: ' +
-            name +
-            ' | Email: ' +
-            email +
-            ' | Phone: ' +
-            phone +
-            ' | Pass: ' +
-            pass
-        );
     };
     facebook = () => {
         alert('đăng nhập bằng Facebook');
@@ -101,9 +125,7 @@ export default function Signin({ route }) {
                         placeholder="Name"
                         placeholderTextColor="gray"
                         style={styles.input}
-                        onChangeText={(text) => {
-                            setName(text)
-                        }}
+                        onChangeText={text => setName(text)}
                         value={name}
                     />
                 </View>
@@ -116,9 +138,7 @@ export default function Signin({ route }) {
                         placeholder="Email"
                         placeholderTextColor="gray"
                         style={styles.input}
-                        onChangeText={(text) => {
-                            setEmail(text)
-                        }}
+                        onChangeText={text => setEmail(text)}
                         value={email}
                     />
                 </View>
@@ -132,9 +152,7 @@ export default function Signin({ route }) {
                         placeholderTextColor="gray"
                         style={styles.input}
                         secureTextEntry={true}
-                        onChangeText={(text) => {
-                            setPhone(text)
-                        }}
+                        onChangeText={text => setPhone(text)}
                         value={phone}
                     />
                 </View>
@@ -148,9 +166,7 @@ export default function Signin({ route }) {
                         placeholderTextColor="gray"
                         style={styles.input}
                         secureTextEntry={true}
-                        onChangeText={(text) => {
-                            setPass(text)
-                        }}
+                        onChangeText={text => setPass(text)}
                         value={pass}
                     />
                 </View>

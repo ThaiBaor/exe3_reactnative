@@ -95,6 +95,23 @@ app.get('/username', function (req, res) {
     })
 })
 
+app.post('/email', function (req, res) {
+    const email = req.query.email;
+    dbcon.query('SELECT COUNT(*) AS count FROM user WHERE email = ?', email, function (err, result) {
+        if (err) throw err;
+        return res.send({ data: result })
+    })
+})
+
+app.post('/login', function (req, res) {
+    const email = req.query.email;
+    const pass = req.query.pass;
+    dbcon.query('SELECT * FROM user where email=? AND password=?', [email, pass], function (err, results) {
+        if (err) throw err;
+        return res.send({ data: results })
+    })
+})
+
 app.post('/them', function (req, res) {
     let name = req.query.name;
     let password = req.query.password;
