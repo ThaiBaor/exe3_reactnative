@@ -2,10 +2,9 @@ import React from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useState } from "react";
 
-export default function Food({item}){
-    const [image, setImage] = useState[item.image];
+export default function Food({item, onPress}){
     return(
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
                 <Image style={styles.image} source={{}} />
                 <View style={styles.textContainer}>
