@@ -12,7 +12,7 @@ const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 const App = () => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    const [id, setId] = useState('');
+    const [id_food, setId] = useState('');
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
@@ -70,12 +70,12 @@ const App = () => {
             setLoading(false);
         }
     };
-    const updateFood = async (name, description, price, idCategory, image) => {
+    const updateFood = async (id_food,name, description, price, idCategory, image) => {
         setLoading(true);
         try {
             const response = await axios.put(`${uri}/update`, null, {
                 params: {
-                    id_food: id,
+                    id_food: id_food,
                     name: name,
                     price: price,
                     description: description,
@@ -93,11 +93,12 @@ const App = () => {
         }
     };
 
-    const select =(id_food, name, des, price, id_cate, img)=>{
-        setId(id_food);
+    const select =(id, name, des, pri, id_cate, img)=>{
+        setLoading(true);
+        setId(id);
         setName(name);
+        setPrice(pri);
         setDescription(des);
-        setPrice(price);
         setIdCategory(id_cate);
         setImage(img);
     }
@@ -108,12 +109,7 @@ const App = () => {
 
     return (
         <View style={{ flex: 1, padding: 24, paddingTop: 50, height: 100 }}>
-            <TextInput
-                style={styles.textInput}
-                value={id}
-                placeholder="ID"
-                onChangeText={(text) => setId(text)}
-            />
+            <Text style={{margin:5, padding:5}}>ID: {id_food}</Text>
             <TextInput
                 style={styles.textInput}
                 value={name}
@@ -135,7 +131,7 @@ const App = () => {
             <TextInput
                 style={styles.textInput}
                 value={idCategory}
-                placeholder="Id catagory"
+                placeholder="Id category"
                 onChangeText={(text) => setIdCategory(text)}
             />
             <TextInput
@@ -149,7 +145,7 @@ const App = () => {
                 <TouchableOpacity style={styles.nutThem} onPress={() => add(name, description, price, idCategory, image)}>
                     <Text>ADD</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.nutSua} onPress={() => updateFood(id, name, description, price, idCategory, image)} ><Text>UPDATE</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.nutSua} onPress={() => updateFood(id_food, name, description, price, idCategory, image)} ><Text>UPDATE</Text></TouchableOpacity>
             </View>
             {isLoading ? (
                 <ActivityIndicator />
@@ -162,7 +158,7 @@ const App = () => {
                             <View style={styles.containerItem}>
                                 <Image
                                     style={styles.hinh}
-                                    source={require('../assets/images/burger.jpg')}></Image>
+                                    source={{uri:item.image}}></Image>
                                 <View style={styles.containerMoTaItem}>
                                     <Text style={styles.textName} key={item.name}>
                                         Name: {item.name}
