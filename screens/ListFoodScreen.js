@@ -33,7 +33,7 @@ export default function ListFood({navigation, id_category}){
         },
     ];
     return(
-        <FlatList data={listFood} renderItem={({item})=><Food item={item}></Food>}>
+        <FlatList data={listFood} renderItem={({item})=><Food item={item} onPress={()=>navigation.navigate('DetailFood')}></Food>}>
         </FlatList>
     )
 }

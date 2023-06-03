@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import axios from 'axios';
+import Constants from "expo-constants";
+const { manifest } = Constants;
+const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 import { NavigationContainer } from '@react-navigation/native';
 
-const detailFood = () => {
+const DetailFood = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [id_food, setIdFood] = useState('');
@@ -17,7 +20,7 @@ const detailFood = () => {
 
   let getFood = async () => {
     try {
-      const response = await fetch('http:/192.168.1.37:3000/getfoodbyid?id_food=1');
+      const response = await fetch(`${uri}/getfoodbyid?id_food=1`);
       const json = await response.json();
       setData(json.data);
 
@@ -30,7 +33,7 @@ const detailFood = () => {
   const add = async (id_user, id_food, name, description, price, idCategory, image, note, numberoffood) => {
     setLoading(true);
     try {
-      const response = await axios.post('http:/192.168.1.37:3000/createcart', null, {
+      const response = await axios.post(`${uri}/createcart`, null, {
         params: {
           id_user: id_user,
           id_food: id_food,
@@ -63,9 +66,9 @@ const detailFood = () => {
       </View>
       <Image style={styles.imageDetail} source={require('../assets/images/burger.jpg')} />
       <View style={{ alignItems: 'center', }}>
-        <Text style={styles.nameDetail}>{data[0].name}</Text>
-        <Text style={styles.description}>{data[0].description}</Text>
-        <Text style={styles.nameDetail}>Price: {data[0].price}$</Text>
+        <Text style={styles.nameDetail}></Text>
+        <Text style={styles.description}></Text>
+        <Text style={styles.nameDetail}></Text>
       </View>
       <View>
         <Text style={styles.note}>Special Instruction</Text>
@@ -189,7 +192,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default detailFood;
+export default DetailFood;
 
 
 

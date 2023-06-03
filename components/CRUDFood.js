@@ -5,6 +5,9 @@ import {
 } from 'react-native';
 import axios from 'axios';
 
+import Constants from "expo-constants";
+const { manifest } = Constants;
+const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 
 const App = () => {
     const [isLoading, setLoading] = useState(true);
@@ -19,7 +22,7 @@ const App = () => {
 
     let getFood = async () => {
         try {
-            const response = await fetch('http:/192.168.1.37:3000/getfoodbyid?');
+            const response = await fetch(`${uri}/food`);
             const json = await response.json();
             setData(json.data);
 
@@ -32,7 +35,7 @@ const App = () => {
     const deletefood = async (id) => {
         setLoading(true);
         try {
-            const response = await axios.delete('http:/192.168.1.37:3000/delete', {
+            const response = await axios.delete(`${uri}/delete`, {
                 params: {
                     id: id
                 }
@@ -49,7 +52,7 @@ const App = () => {
     const add = async (name, description, price, idCategory, image) => {
         setLoading(true);
         try {
-            const response = await axios.post('http:/192.168.1.37:3000/create', null, {
+            const response = await axios.post(`${uri}/create`, null, {
                 params: {
                     name: name,
                     price: price,
@@ -70,7 +73,7 @@ const App = () => {
     const updateFood = async (name, description, price, idCategory, image) => {
         setLoading(true);
         try {
-            const response = await axios.put('http:/192.168.1.37:3000/update', null, {
+            const response = await axios.put(`${uri}/update`, null, {
                 params: {
                     id_food: id,
                     name: name,

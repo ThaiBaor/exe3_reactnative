@@ -1,9 +1,9 @@
 import React from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 
-export default function Food({item}){
+export default function Food({item, onPress}){
     return(
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
                 <Image style={styles.image} source={item.image}/>
                 <View style={styles.textContainer}>
