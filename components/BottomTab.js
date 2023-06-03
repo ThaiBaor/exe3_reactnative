@@ -2,13 +2,17 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
-import {FoodStackScreen} from "./NativeStack";
+import { FoodStackScreen } from "./NativeStack";
+
+import Login from "../screens/Login";
+import Signin from "../screens/Signin";
+import Forgot from "../screens/ForgotPass";
 
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
     return (
-        <Tab.Navigator  screenOptions={{
-            
+        <Tab.Navigator initialRouteName="Home" screenOptions={{
+
             tabBarShowLabel: false,
             tabBarStyle: {
                 elevation: 10,
@@ -16,11 +20,11 @@ const Tabs = () => {
                 height: 60,
                 ...styles.shadow
             },
-            
+
         }}
         >
-            <Tab.Screen  name="Home" component={HomeScreen} options={
-                {                   
+            <Tab.Screen name="Home" component={HomeScreen} options={
+                {
                     headerShown: "false",
                     tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactivehome.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activehome.png')} style={{ width: 25, height: 25 }}></Image>)
                 }
@@ -30,7 +34,7 @@ const Tabs = () => {
             }
             }></Tab.Screen>
             <Tab.Screen name="Search" component={HomeScreen} options={{
-                tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactivesearch.png')} style={{ width: 35, height: 35, position:'absolute', bottom: 22 }}></Image>) : (<Image source={require('../assets/icons/activesearch.png')} style={{ width: 35, height: 35, position:'absolute', bottom: 22 }}></Image>)
+                tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactivesearch.png')} style={{ width: 35, height: 35, position: 'absolute', bottom: 22 }}></Image>) : (<Image source={require('../assets/icons/activesearch.png')} style={{ width: 35, height: 35, position: 'absolute', bottom: 22 }}></Image>)
             }
             }></Tab.Screen>
 
@@ -39,11 +43,25 @@ const Tabs = () => {
                 tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactiveuser.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activeuser.png')} style={{ width: 25, height: 25 }}></Image>)
             }
             }></Tab.Screen>
-            <Tab.Screen  name="Cart" component={HomeScreen} options={{
+            <Tab.Screen name="Cart" component={HomeScreen} options={{
                 tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactivecart.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activecart.png')} style={{ width: 25, height: 25 }}></Image>)
             }
             }></Tab.Screen>
-            
+
+            {/* Đăng ký, Đăng nhập, Quên Mật khẩu */}
+            <Tab.Screen name="Login" component={Login} options={{
+                tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactiveuser.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activeuser.png')} style={{ width: 25, height: 25 }}></Image>)
+            }
+            }></Tab.Screen>
+            <Tab.Screen name="Signin" component={Signin} options={{
+                tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactivecart.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activecart.png')} style={{ width: 25, height: 25 }}></Image>)
+            }
+            }></Tab.Screen>
+            <Tab.Screen name="Fogot" component={Forgot} options={{
+                tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactivecart.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activecart.png')} style={{ width: 25, height: 25 }}></Image>)
+            }
+            }></Tab.Screen>
+
         </Tab.Navigator>
     )
 }
