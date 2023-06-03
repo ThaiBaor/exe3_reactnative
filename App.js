@@ -1,17 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTab from './components/BottomTab';
-import DetailFood from './components/DetailFood';
-
+import CURDFood from './components/CRUDFood';
 export default function App() {
   return (
-    <DetailFood>
-      
-    </DetailFood>
+    <NavigationContainer>
+      <CURDFood></CURDFood>
+    </NavigationContainer>
   );
- 
 }
-
 
 
