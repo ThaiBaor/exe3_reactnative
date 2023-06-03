@@ -1,10 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import axios from 'axios';
 import { NavigationContainer } from '@react-navigation/native';
 
+const detailFood = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [id_food, setIdFood] = useState('');
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [description, setDescription] = useState('');
+  const [idCategory, setIdCategory] = useState('');
+  const [image, setImage] = useState('');
+  const [note, setNote] = useState('');
+  const [numberoffood, setNumberOfFood] = useState('');
 
-export default function App() {
+  let getFood = async () => {
+    try {
+      const response = await fetch('http:/192.168.1.37:3000/getfoodbyid?id_food=1');
+      const json = await response.json();
+      setData(json.data);
 
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const add = async (id_user, id_food, name, description, price, idCategory, image, note, numberoffood) => {
+    setLoading(true);
+    try {
+      const response = await axios.post('http:/192.168.1.37:3000/createcart', null, {
+        params: {
+          id_user: id_user,
+          id_food: id_food,
+          name: name,
+          price: price,
+          description: description,
+          id_category: idCategory,
+          image: image,
+          note: note,
+          numberoffood: numberoffood,
+        }
+      }).then(response => {
+        alert('da them');
+        getFood();
+      })
+    }
+    catch (error) {
+      alert(error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getFood();
+    console.log(data);
+  }, []);
   return (
     <View>
       <View style={styles.container1}>
@@ -12,14 +63,16 @@ export default function App() {
       </View>
       <Image style={styles.imageDetail} source={require('../assets/images/burger.jpg')} />
       <View style={{ alignItems: 'center', }}>
-        <Text style={styles.nameDetail}>Burger</Text>
-        <Text style={styles.description}>Dish of Italian origin consisting of a flattened disk of bread dough</Text>
-        <Text style={styles.nameDetail}>Price: 10$</Text>
+        <Text style={styles.nameDetail}>{data[0].name}</Text>
+        <Text style={styles.description}>{data[0].description}</Text>
+        <Text style={styles.nameDetail}>Price: {data[0].price}$</Text>
       </View>
       <View>
         <Text style={styles.note}>Special Instruction</Text>
         <TextInput
           style={styles.textInfo}
+          value={note}
+          onChangeText={(text) => setNote(text)}
           placeholder='Enter more information here...'></TextInput>
         <Text>------------------------------------------------------------------------------------------------------</Text>
       </View>
@@ -27,11 +80,14 @@ export default function App() {
         <Text style={styles.note}>Number of food</Text>
         <TextInput
           style={styles.textInfo}
+          value={numberoffood}
+          onChangeText={(text) => setNumberOfFood(text)}
           placeholder='Enter number of food here...'></TextInput>
       </View>
       <View style={styles.footdetail2}>
         <TouchableOpacity
-      style={styles.addtocart}><Text style={{fontWeight:'bold'}}>ADD TO CART</Text></TouchableOpacity>
+        onPress={()=>add(1,1,data[0].name,data[0].description,data[0].price,data[0].id_category,data[0].image, note, numberoffood)}
+          style={styles.addtocart}><Text style={{ fontWeight: 'bold' }}>ADD TO CART</Text></TouchableOpacity>
       </View>
     </View>
   );
@@ -98,34 +154,24 @@ const styles = StyleSheet.create({
     padding: 5,
     marginLeft: 5,
     marginRight: 5,
-    borderRadius:10,
+    borderRadius: 10,
   },
 
   footdetail: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
-  footdetail2:{
+  footdetail2: {
     alignItems: 'center',
-    fontWeight:'bold',
+    fontWeight: 'bold',
   },
-  addtocart:{
-    margin:25,
+  addtocart: {
+    margin: 25,
     padding: 20,
     backgroundColor: 'red',
-    borderRadius:10,
+    borderRadius: 10,
     fontSize: 20,
-    
-  },
-  nhom: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 15,
-  },
-  hoten: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 20,
+
   },
   back: {
     justifyContent: 'center',
@@ -141,81 +187,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#000000',
   },
-  listfood: {
-    width: 155,
-    height: 31,
-    marginLeft: 10,
-
-    fontStyle: 'normal',
-    fontWeight: 400,
-    fontSize: 25,
-    lineHeight: 44,
-    color: ' #000000',
-  },
-  hinhmonan: {
-    width: 100,
-    height: 100,
-    marginTop: 20,
-    borderRadius: 25,
-  },
-
-  nutadd: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 30 - 100,
-    width: 70,
-    height: 40,
-    marginLeft: 75,
-    marginTop: 5,
-    borderRadius: 20,
-    background: 'red',
-    color: '#fff',
-  },
-  nutsua: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    width: 70,
-    height: 40,
-    borderRadius: 20,
-    background: 'red',
-    color: '#fff',
-    marginBottom: 10,
-  },
-
-  nutdelete: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    width: 70,
-    height: 40,
-    borderRadius: 20,
-    background: 'red',
-    color: '#fff',
-  },
-
-  tenmonan: {
-    marginTop: 30,
-    marginLeft: 10,
-    fontWeight: 'bold',
-    fontSize: 24,
-    color: '#000000',
-  },
-  gia: {
-    marginTop: 10,
-    marginLeft: 10,
-    width: 155,
-    height: 31,
-    fontWeight: 'bold',
-    fontSize: 24,
-    color: '#000000',
-  },
 });
+
+export default detailFood;
+
+
 
 
 

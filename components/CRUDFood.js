@@ -17,10 +17,9 @@ const App = () => {
     const [image, setImage] = useState('');
 
 
-
     let getFood = async () => {
         try {
-            const response = await fetch('http:/192.168.1.37:3000/food');
+            const response = await fetch('http:/192.168.1.37:3000/getfoodbyid?');
             const json = await response.json();
             setData(json.data);
 
@@ -90,6 +89,10 @@ const App = () => {
             setLoading(false);
         }
     };
+
+    const navi = () =>{
+        navigation.navigate('DetailFood');
+    }
 
     useEffect(() => {
         getFood();
@@ -162,6 +165,7 @@ const App = () => {
                                 Image: {item.image}
                             </Text>
                             <TouchableOpacity onPress={()=>deletefood(item.id_food)}><Text>Xoa</Text></TouchableOpacity> 
+                            <TouchableOpacity onPress={()=>navigation.navigate('DetailFood')}><Text>chon</Text></TouchableOpacity> 
                         </TouchableOpacity>
                     )}
                 />
