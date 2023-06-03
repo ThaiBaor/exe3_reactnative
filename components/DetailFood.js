@@ -23,12 +23,12 @@ const DetailFood = () => {
       const response = await fetch(`${uri}/getfoodbyid?id_food=1`);
       const json = await response.json();
       setData(json.data);
-      setIdFood = data[0].id_food;
-      setName = data[0].name;
-      setDescription = data[0].description;
-      setPrice = data[0].price;
-      setIdCategory = data[0].id_category;
-      setImage = data[0].image;
+      setIdFood(data[0].id_food);
+      setName(data[0].name);
+      setDescription(data[0].description);
+      setPrice(data[0].price);
+      setIdCategory(data[0].id_category);
+      setImage(data[0].image);
       
     } catch (error) {
       console.error(error);
@@ -66,15 +66,17 @@ const DetailFood = () => {
     console.log(data);
   }, []);
   return (
+    
     <View>
+      <ScrollView>
       <View style={styles.container1}>
         <Text style={styles.toptitle}>Food Detail</Text>
       </View>
       <Image style={styles.imageDetail} source={require('../assets/images/burger.jpg')} />
       <View style={{ alignItems: 'center', }}>
-        <Text style={styles.nameDetail}></Text>
-        <Text style={styles.description}></Text>
-        <Text style={styles.nameDetail}></Text>
+        <Text style={styles.nameDetail}>{name}</Text>
+        <Text style={styles.description}>{description}</Text>
+        <Text style={styles.nameDetail}>{price}$</Text>
       </View>
       <View>
         <Text style={styles.note}>Special Instruction</Text>
@@ -98,6 +100,7 @@ const DetailFood = () => {
         onPress={()=>add(1,id_food,name,description,price,idCategory,image, note, numberoffood)}
           style={styles.addtocart}><Text style={{ fontWeight: 'bold' }}>ADD TO CART</Text></TouchableOpacity>
       </View>
+      </ScrollView>
     </View>
   );
 }
@@ -143,7 +146,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   nameDetail: {
-    backgroundColor: '#fff',
     fontWeight: 'bold',
     fontSize: 30,
   },
@@ -152,7 +154,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   note: {
-    backgroundColor: '#fff',
     fontWeight: 'bold',
     fontSize: 20,
     margin: 10,
