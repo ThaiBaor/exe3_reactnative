@@ -23,7 +23,13 @@ const DetailFood = () => {
       const response = await fetch(`${uri}/getfoodbyid?id_food=1`);
       const json = await response.json();
       setData(json.data);
-
+      setIdFood = data[0].id_food;
+      setName = data[0].name;
+      setDescription = data[0].description;
+      setPrice = data[0].price;
+      setIdCategory = data[0].id_category;
+      setImage = data[0].image;
+      
     } catch (error) {
       console.error(error);
     } finally {
@@ -89,7 +95,7 @@ const DetailFood = () => {
       </View>
       <View style={styles.footdetail2}>
         <TouchableOpacity
-        onPress={()=>add(1,1,data[0].name,data[0].description,data[0].price,data[0].id_category,data[0].image, note, numberoffood)}
+        onPress={()=>add(1,id_food,name,description,price,idCategory,image, note, numberoffood)}
           style={styles.addtocart}><Text style={{ fontWeight: 'bold' }}>ADD TO CART</Text></TouchableOpacity>
       </View>
     </View>
