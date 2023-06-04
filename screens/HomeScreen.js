@@ -34,7 +34,7 @@ export default function HomeScreen() {
                         marginLeft: 10,
                         marginRight: 10
                     }}>Food Catogories</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('CategoryFood')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Category Food')}>
                         <Image source={require('../assets/icons/more_icon.png')} style={{ height: 30, width: 30 }}></Image>
                     </TouchableOpacity>
                 </View>

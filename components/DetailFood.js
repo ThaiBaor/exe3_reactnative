@@ -17,19 +17,22 @@ const DetailFood = () => {
   const [image, setImage] = useState('');
   const [note, setNote] = useState('');
   const [numberoffood, setNumberOfFood] = useState('');
+  
+  useEffect(() => {
+    getFood();
+  }, []);
 
   let getFood = async () => {
     try {
       const response = await fetch(`${uri}/getfoodbyid?id_food=1`);
       const json = await response.json();
       setData(json.data);
-      setIdFood = data[0].id_food;
-      setName = data[0].name;
-      setDescription = data[0].description;
-      setPrice = data[0].price;
-      setIdCategory = data[0].id_category;
-      setImage = data[0].image;
-      
+      setIdFood(json.data[0].id_food);
+      setName(json.data[0].name);
+      setPrice(json.data[0].price);
+      setDescription(json.data[0].description);
+      setIdCategory(json.data[0].id_category);
+      setImage(json.data[0].image);
     } catch (error) {
       console.error(error);
     } finally {
@@ -61,43 +64,51 @@ const DetailFood = () => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    getFood();
-    console.log(data);
-  }, []);
+
+  const setDL = async()=>{
+    setIdFood(data[0].id_food);
+    setName(data[0].name);
+    setDescription(data[0].description);
+    setPrice(data[0].price);
+    setIdCategory(data[0].id_category);
+    setImage(data[0].image);
+  };
   return (
+
     <View>
-      <View style={styles.container1}>
-        <Text style={styles.toptitle}>Food Detail</Text>
-      </View>
-      <Image style={styles.imageDetail} source={require('../assets/images/burger.jpg')} />
-      <View style={{ alignItems: 'center', }}>
-        <Text style={styles.nameDetail}></Text>
-        <Text style={styles.description}></Text>
-        <Text style={styles.nameDetail}></Text>
-      </View>
-      <View>
-        <Text style={styles.note}>Special Instruction</Text>
-        <TextInput
-          style={styles.textInfo}
-          value={note}
-          onChangeText={(text) => setNote(text)}
-          placeholder='Enter more information here...'></TextInput>
-        <Text>------------------------------------------------------------------------------------------------------</Text>
-      </View>
-      <View style={styles.footdetail}>
-        <Text style={styles.note}>Number of food</Text>
-        <TextInput
-          style={styles.textInfo}
-          value={numberoffood}
-          onChangeText={(text) => setNumberOfFood(text)}
-          placeholder='Enter number of food here...'></TextInput>
-      </View>
-      <View style={styles.footdetail2}>
-        <TouchableOpacity
-        onPress={()=>add(1,id_food,name,description,price,idCategory,image, note, numberoffood)}
-          style={styles.addtocart}><Text style={{ fontWeight: 'bold' }}>ADD TO CART</Text></TouchableOpacity>
-      </View>
+      <ScrollView>
+        <View style={styles.container1}>
+          <Text style={styles.toptitle}>Food Detail</Text>
+        </View>
+        <Image style={styles.imageDetail} source={{uri:image}} />
+        <View style={{ alignItems: 'center', }}>
+          <Text style={styles.nameDetail}>{name}</Text>
+          <Text style={styles.description}>{description}</Text>
+          <Text style={styles.nameDetail}>{price}$</Text>
+        </View>
+        <View>
+          <Text style={styles.note}>Special Instruction</Text>
+          <TextInput
+            style={styles.textInfo}
+            value={note}
+            onChangeText={(text) => setNote(text)}
+            placeholder='Enter more information here...'></TextInput>
+          <Text>------------------------------------------------------------------------------------------------------</Text>
+        </View>
+        <View style={styles.footdetail}>
+          <Text style={styles.note}>Number of food</Text>
+          <TextInput
+            style={styles.textInfo}
+            value={numberoffood}
+            onChangeText={(text) => setNumberOfFood(text)}
+            placeholder='Enter number of food here...'></TextInput>
+        </View>
+        <View style={styles.footdetail2}>
+          <TouchableOpacity
+            onPress={() => add(1, id_food, name, description, price, idCategory, image, note, numberoffood)}
+            style={styles.addtocart}><Text style={{ fontWeight: 'bold' }}>ADD TO CART</Text></TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -143,7 +154,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   nameDetail: {
-    backgroundColor: '#fff',
     fontWeight: 'bold',
     fontSize: 30,
   },
@@ -152,7 +162,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   note: {
-    backgroundColor: '#fff',
     fontWeight: 'bold',
     fontSize: 20,
     margin: 10,

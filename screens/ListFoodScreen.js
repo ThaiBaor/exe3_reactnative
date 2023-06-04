@@ -1,39 +1,35 @@
 import React from "react";
 import Food from "../components/Food";
-import {Text, FlatList } from "react-native";
+import { useState, useEffect } from "react";
+import { ActivityIndicator, FlatList, View } from "react-native";
+import Constants from "expo-constants";
+const { manifest } = Constants;
+const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 
+export default function ListFood({ navigation, id_category }) {
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
 
-export default function ListFood({navigation, id_category}){
-    
-    var listFood = [
-        {
-            name: "Chicken burger",
-            price: "70000",
-            image: require('../assets/images/burger.jpg')
-        },
-        {
-            name: "Fish burger",
-            price: "60000",
-            image: require('../assets/images/fish_burger.jpg')
-        },
-        {
-            name: "Grilled onion burger",
-            price: "40000",
-            image: require('../assets/images/onion_burger.jpg')
-        },
-        {
-            name: "Cheese burger",
-            price: "45000",
-            image: require('../assets/images/cheese_burger.jpg')
-        },
-        {
-            name: "BBQ bacon burger",
-            price: "80000",
-            image: require('../assets/images/bbq_burger.jpg')
-        },
-    ];
-    return(
-        <FlatList data={listFood} renderItem={({item})=><Food item={item} onPress={()=>navigation.navigate('DetailFood')}></Food>}>
-        </FlatList>
+    const getData = async () => {
+        try {
+            const response = await fetch(`${uri}/food`);
+            const json = await response.json();
+            setData(json.data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+    useEffect(() => {
+        getData();
+    }, []);
+    return (
+        <View>
+            {isLoading ? (<ActivityIndicator />) : (
+            <FlatList data={data} renderItem={({ item }) => <Food item={item}></Food>}>
+            </FlatList>)}
+        </View>
+
     )
 }
