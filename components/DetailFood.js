@@ -13,7 +13,7 @@ const DetailFood = ({route}) => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [idCategory, setIdCategory] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState('sdfdsf');
   const [note, setNote] = useState('');
   const [numberoffood, setNumberOfFood] = useState('');
   
