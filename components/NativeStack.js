@@ -13,7 +13,7 @@ function FoodStackScreen(){
             <FoodStack.Screen name="FoodList" component={ListFoodScreen}></FoodStack.Screen>
             <FoodStack.Screen name="CURDFood" component={CURDFood}></FoodStack.Screen>
             <FoodStack.Screen name="DetailFood" component={DetailFood}></FoodStack.Screen>
-            
+
         </FoodStack.Navigator>
     )
 }

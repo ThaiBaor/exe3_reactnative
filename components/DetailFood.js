@@ -35,7 +35,7 @@ const DetailFood = () => {
     } finally {
       setLoading(false);
     }
-  };
+  };  
   const add = async (id_user, id_food, name, description, price, idCategory, image, note, numberoffood) => {
     setLoading(true);
     try {
