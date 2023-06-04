@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
+import '../components/global';
 import Constants from "expo-constants";
 const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
@@ -36,10 +37,11 @@ export default function Login() {
                 if (data.data.length === 0) {
                     alert('Email hoặc Password sai\nVui lòng kiểm tra lại tên đăng nhập và mật khẩu.');
                 } else {
+                    
                     const useremail = data.data[0].email;
                     const userpass = data.data[0].password;
                     const admin = data.data[0].admin;
-
+                    global.id_user = data.data[0].id;
                     let hashpass = await bcrypt.compare(pass, userpass);
 
                     // kiểm tra user nhập dữ liệu

@@ -2,79 +2,76 @@ import react from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { FlatList, TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import Constants from "expo-constants";
+import '../components/global';
+const { manifest } = Constants;
 import FoodInCart from '../components/FoodInCart';
+
+const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
+
 export default function CartScreen() {
     const [selectedId, setSelectedId] = useState(0);
-    const [data, setData] = useState([{
-        name: "Chicken burger",
-        price: 70000,
-        image: require('../assets/images/burger.jpg')
-    },
-    {
-        name: "Fish burger",
-        price: 60000,
-        image: require('../assets/images/fish_burger.jpg')
-    },
-    {
-        name: "Grilled onion burger",
-        price: 40000,
-        image: require('../assets/images/onion_burger.jpg')
-    },
-    {
-        name: "Cheese burger",
-        price: 50000,
-        image: require('../assets/images/cheese_burger.jpg')
-    },
-    {
-        name: "BBQ bacon burger",
-        price: 90000,
-        image: require('../assets/images/bbq_burger.jpg')
-    },]);
+    const [data, setData] = useState([]);
+    let getCart = async () => {
+        try {
+            const response = await fetch(`${uri}/cart?id_user=${global.id_user}`);
+            const json = await response.json();
+            setData(json.data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+        }
+    };
     const [discount, setDiscount] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
     const [total, setTotal] = useState(0);
-    const getSubTotal=()=>{
-        var result=0;
+    const getSubTotal = () => {
+        var result = 0;
         data.forEach(element => {
-            result +=element.price;
+            result += element.price;
         });
-        return setSubTotal(result);
+        setSubTotal(result);
+        getTotal();
     };
-    const getTotal=()=>{
-        return setTotal(subTotal*(100-discount)/100);
+    const getTotal = () => {
+        return setTotal(subTotal * (100 - discount) / 100);
     };
-    const remove=(name)=>{
+    const remove = (name) => {
         let newData = data
-        for (var i=0;i<newData.length;++i){
-            if (newData[i].name===name){
-                newData.splice(i,1);
+        for (var i = 0; i < newData.length; ++i) {
+            if (newData[i].name === name) {
+                newData.splice(i, 1);
                 break;
             }
         }
         setData(newData);
         alert("remove");
     }
-    const clear=()=>{
-        if (data.length>0){
-            let newData=data;
-            newData.splice(0,newData.length);
+    const clear = () => {
+        if (data.length > 0) {
+            let newData = data;
+            newData.splice(0, newData.length);
             setData(newData);
             setTotal(0);
             setSubTotal(0);
             alert("clear");
         }
-        else{
+        else {
             alert("Empty")
         }
     }
-    useEffect(() => {
+    const load =()=>{
+        getCart();
         getSubTotal();
         getTotal();
+    }
+    useEffect(() => {
+        getCart();
     }, []);
     return (
         <View style={styles.container}>
             <View style={styles.list}>
-                <FlatList showsVerticalScrollIndicator={false} data={data} extraData={selectedId} renderItem={({ item }) => <FoodInCart item={item} ></FoodInCart>}>
+                <FlatList showsVerticalScrollIndicator={false} data={data} extraData={selectedId} renderItem={({ item }) => <FoodInCart item={item}  ></FoodInCart>}>
                 </FlatList>
             </View>
             <View style={styles.invoice_info_container}>
@@ -86,8 +83,8 @@ export default function CartScreen() {
                 <TouchableOpacity>
                     <Text style={styles.pay}>Pay</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={clear}>
-                    <Text style={styles.clear}>Clear</Text>
+                <TouchableOpacity onPress={() => load()}>
+                    <Text style={styles.clear}>Load</Text>
                 </TouchableOpacity>
             </View>
         </View>

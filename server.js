@@ -17,6 +17,20 @@ app.get('/food', function (req, res) {
         return res.send({ data: result })
     })
 })
+app.get('/cart', function (req, res) {
+    const id_user = req.query.id_user;
+    dbcon.query('SELECT * FROM cart where id_user = ?',id_user, function (err, result) {
+        if (err) throw err;
+        return res.send({ data: result })
+    })
+})
+app.delete('/detelecartitem', function (req, res) {
+    const id_food = req.query.id_food;
+    dbcon.query('delete from cart where id_food = ?',id_food, function (err, result) {
+        if (err) throw err;
+        return res.send({ data: result })
+    })
+})
 app.get('/getfoodbyid', function (req, res) {
     const id_food = req.query.id_food;
     dbcon.query('SELECT * FROM food where id_food=?', id_food, function (err, result) {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import axios from 'axios';
 import Constants from "expo-constants";
+import '../components/global';
 const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 
@@ -105,7 +106,7 @@ const DetailFood = ({route}) => {
         </View>
         <View style={styles.footdetail2}>
           <TouchableOpacity
-            onPress={() => add(1, id_food, name, description, price, idCategory, image, note, numberoffood)}
+            onPress={() => add(global.id_user, id_food, name, description, price, idCategory, image, note, numberoffood)}
             style={styles.addtocart}><Text style={{ fontWeight: 'bold' }}>ADD TO CART</Text></TouchableOpacity>
         </View>
       </ScrollView>
