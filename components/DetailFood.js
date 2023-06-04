@@ -4,7 +4,6 @@ import axios from 'axios';
 import Constants from "expo-constants";
 const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
-import { NavigationContainer } from '@react-navigation/native';
 
 const DetailFood = ({route}) => {
   const [isLoading, setLoading] = useState(true);

@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function CategoryFood({scr, name, index, onPress}){
+export default function CategoryFood({item, index, onPress}){
     
     return(
         <View style={styles.container}>
             <TouchableOpacity onPress={onPress}>
-            <Image style={styles.image} source={scr}/>
-            <Text style={styles.text}>{name}</Text>
+            <Image style={styles.image} source={item.image}/>
+            <Text style={styles.text}>{item.name}</Text>
             </TouchableOpacity>
         </View>
     )
