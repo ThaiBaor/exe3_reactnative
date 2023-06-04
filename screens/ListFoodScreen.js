@@ -1,11 +1,18 @@
 import React from "react";
 import Food from "../components/Food";
-import {Text, FlatList } from "react-native";
+import { FlatList } from "react-native";
+import { useEffect, useState } from "react";
+import { useRoute } from "@react-navigation/native";
+import axios from 'axios';
+import Constants from "expo-constants";
+const { manifest } = Constants;
+const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 
-
-export default function ListFood({navigation, id_category}){
-    
+export default function ListFood({ navigation }) {
+    const route = useRoute();
+    const id_category = route.params?.id_category;
     var listFood = [
+        /*
         {
             name: "Chicken burger",
             price: "70000",
@@ -30,10 +37,27 @@ export default function ListFood({navigation, id_category}){
             name: "BBQ bacon burger",
             price: "80000",
             image: require('../assets/images/bbq_burger.jpg')
-        },
+        },*/
     ];
-    return(
-        <FlatList data={listFood} renderItem={({item})=><Food item={item} onPress={()=>navigation.navigate('DetailFood')}></Food>}>
+    const [data, setData] = useState([]);
+    
+    let getFoodById_category = async () => {
+        try {
+            const response = await fetch(`${uri}/category/id/food?id_category=${id_category}`);
+            const json = await response.json();
+            setData(json.data);
+            console.log(id_category);
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+        }
+    };
+    useEffect(() => {
+        getFoodById_category();
+    }, []);
+    return (
+        <FlatList data={data} renderItem={({ item }) => <Food item={item} onPress={() => navigation.navigate('DetailFood')}></Food>}>
         </FlatList>
     )
 }
