@@ -28,9 +28,29 @@ export default function Login() {
                 pass: pass
             }
         })
-            .then(response => {
+            .then (response => {
                 // Xử lý phản hồi từ API sau khi đăng nhập thành công
-                alert('Đăng nhập thành công');
+                const { data } = response;
+
+                if (data.data.length === 0) {
+                    alert('Email hoặc Password sai\nVui lòng kiểm tra lại tên đăng nhập và mật khẩu.');
+                } else {
+                    const useremail = data.data[0].email;
+                    const userpass = data.data[0].password;
+                    const admin = data.data[0].admin;
+
+                    // kiểm tra user nhập dữ liệu
+                    if (useremail == email && userpass == pass) {
+                        // kiểm tra quyền user
+                        if (admin == 0) {
+                            alert('Đăng nhập thành công');
+                            // navigation user
+                        } else {
+                            alert('Đăng nhập admin thành công');
+                             // navigation admin
+                        }
+                    }
+                }
             })
             .catch(error => {
                 // Xử lý lỗi khi đăng nhập không thành công
