@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import CURDFood from './components/CRUDFood'
 import BottomTab from './components/BottomTab';
 import DetailFood from './components/DetailFood';
+import Login from './screens/Login';
 export default function App() {
   
   return (

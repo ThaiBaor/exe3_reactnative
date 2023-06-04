@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import axios from 'axios';
 import Constants from "expo-constants";
+import { useRoute } from '@react-navigation/native';
+import '../components/global';
 const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 
@@ -13,17 +15,20 @@ const DetailFood = () => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [idCategory, setIdCategory] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState('acknacoiahcacp');
   const [note, setNote] = useState('');
   const [numberoffood, setNumberOfFood] = useState('');
+  
   
   useEffect(() => {
     getFood();
   }, []);
+  const route = useRoute();
+  const food_id = route.params?.id_food;
 
   let getFood = async () => {
     try {
-      const response = await fetch(`${uri}/getfoodbyid?id_food=1`);
+      const response = await fetch(`${uri}/getfoodbyid?id_food=${food_id}`);
       const json = await response.json();
       setData(json.data);
       setIdFood(json.data[0].id_food);
@@ -104,7 +109,7 @@ const DetailFood = () => {
         </View>
         <View style={styles.footdetail2}>
           <TouchableOpacity
-            onPress={() => add(1, id_food, name, description, price, idCategory, image, note, numberoffood)}
+            onPress={() => add(global.id_user, id_food, name, description, price, idCategory, image, note, numberoffood)}
             style={styles.addtocart}><Text style={{ fontWeight: 'bold' }}>ADD TO CART</Text></TouchableOpacity>
         </View>
       </ScrollView>

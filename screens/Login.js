@@ -10,7 +10,7 @@ import {
     ScrollView,
 } from 'react-native';
 import axios from 'axios';
-import '../components/global.js'
+
 import Constants from "expo-constants";
 const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
@@ -34,6 +34,7 @@ export default function Login() {
                 if (data.data.length === 0) {
                     alert('Email hoặc Password sai\nVui lòng kiểm tra lại tên đăng nhập và mật khẩu.');
                 } else {
+                    global.id_user = data.data[0].id;
                     const useremail = data.data[0].email;
                     const userpass = data.data[0].password;
                     const admin = data.data[0].admin;
