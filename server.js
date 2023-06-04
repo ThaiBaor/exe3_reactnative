@@ -33,6 +33,16 @@ app.get('/food/id', function (req, res) {
     })
 })
 
+// get food by category
+app.get('/category/id/food', function (req, res) {
+    const id_category = req.query.id_category;
+    dbcon.query('SELECT * FROM food where id_category=? ',id_category, function (err, results) {
+        if (err) throw err;
+        return res.send({ data: results })
+    })
+})
+//----------------------
+
 app.post('/create', function (req, res) {
     let name = req.query.name;
     let price = req.query.price;

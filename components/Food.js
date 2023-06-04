@@ -6,7 +6,7 @@ export default function Food({item, onPress}){
     return(
         <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
-                <Image style={styles.image} source={{}} />
+                <Image style={styles.image} source={{uri:item.image}}/>
                 <View style={styles.textContainer}>
                     <Text style={styles.name}>{item.name}</Text>
                     <Text style={styles.price}>{Intl.NumberFormat('vi-VN',{ style: 'currency', currency: 'VND' }).format(item.price)}</Text>
