@@ -27,7 +27,7 @@ export default function ListFood({ navigation, id_category }) {
     return (
         <View>
             {isLoading ? (<ActivityIndicator />) : (
-            <FlatList data={data} renderItem={({ item }) => <Food item={item}></Food>}>
+            <FlatList data={data} renderItem={({ item }) => <Food navigation={navigation} item={item}></Food>}>
             </FlatList>)}
         </View>
 

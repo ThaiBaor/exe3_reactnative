@@ -2,9 +2,9 @@ import React from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useState } from "react";
 
-export default function Food({item, onPress}){
+export default function Food({item,navigation , onPress}){
     return(
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={()=>navigation.navigate('Detail Food',{food_id:item.id_food})}>
             <View style={styles.container}>
                 <Image style={styles.image} source={{}} />
                 <View style={styles.textContainer}>

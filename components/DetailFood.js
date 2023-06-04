@@ -6,7 +6,7 @@ const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 import { NavigationContainer } from '@react-navigation/native';
 
-const DetailFood = () => {
+const DetailFood = ({route}) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [id_food, setIdFood] = useState('');
@@ -20,11 +20,12 @@ const DetailFood = () => {
   
   useEffect(() => {
     getFood();
+    console.log(route.params.food_id)
   }, []);
 
   let getFood = async () => {
     try {
-      const response = await fetch(`${uri}/getfoodbyid?id_food=1`);
+      const response = await fetch(`${uri}/getfoodbyid?id_food=${route.params.food_id}`);
       const json = await response.json();
       setData(json.data);
       setIdFood(json.data[0].id_food);
