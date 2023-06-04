@@ -6,8 +6,8 @@ import FoodCategoryBanner from '../components/FoodCategoryBanner';
 import RecommendedmMeal from '../components/RecommendedMeal';
 export default function HomeScreen() {
     const navigation = useNavigation();
-    var recommendedFoods = [require('../assets/images/steak1.jpg'), require('../assets/images/seafood1.jpg'), require('../assets/images/salad.jpg'), require('../assets/images/sasimi.jpg')];
-    var foodCategories = [require('../assets/images/steak.jpg'), require('../assets/images/seafood.jpg'), require('../assets/images/salad1.jpg'), require('../assets/images/burger.jpg'), require('../assets/images/dessert.jpg'), require('../assets/images/pizza.jpg')];
+    var recommendedFoods = [{id:5,image:require('../assets/images/steak1.jpg')},{id:3,image: require('../assets/images/seafood1.jpg')}, {id:1, image:require('../assets/images/salad.jpg')}];
+    var foodCategories = [{id:5,image:require('../assets/images/steak.jpg')}, {id:3,image:require('../assets/images/seafood.jpg')}, {id:1,image:require('../assets/images/salad1.jpg')}, {id:7,iamge:require('../assets/images/burger.jpg')},{id:4,image: require('../assets/images/dessert.jpg')},{id:6,image: require('../assets/images/pizza.jpg')}];
     var recommendedMeals = [require('../assets/images/breakfast.png'), require('../assets/images/lunch.jpg'), require('../assets/images/dinner.jpg')];
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -22,7 +22,7 @@ export default function HomeScreen() {
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}
                     data={recommendedFoods}
-                    renderItem={({ item }) => (<RecommendedFood scr={item}></RecommendedFood>)}>
+                    renderItem={({ item }) => (<RecommendedFood scr={item.image} onPress={()=> navigation.navigate('Category Food',{screen:"Food List",initial: false,params:{id_category: item.id}})}></RecommendedFood>)}>
                 </FlatList>
             </View>
             <View style={styles.foodSession}>
@@ -42,7 +42,7 @@ export default function HomeScreen() {
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}
                     data={foodCategories}
-                    renderItem={({ item }) => (<FoodCategoryBanner scr={item}></FoodCategoryBanner>)}>
+                    renderItem={({ item }) => (<FoodCategoryBanner scr={item.image} onPress={()=> navigation.navigate('Category Food',{screen:"Food List",initial: false, params:{id_category: item.id}})}></FoodCategoryBanner>)}>
                 </FlatList>
             </View>
             <View style={styles.foodSession}>

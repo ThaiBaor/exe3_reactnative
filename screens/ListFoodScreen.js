@@ -1,14 +1,15 @@
 import React from "react";
 import Food from "../components/Food";
-import { FlatList } from "react-native";
 import { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
+import { View,FlatList } from "react-native";
 import axios from 'axios';
 import Constants from "expo-constants";
 const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 
 export default function ListFood({ navigation }) {
+
     const route = useRoute();
     const id_category = route.params?.id_category;
     var listFood = [
@@ -58,9 +59,8 @@ export default function ListFood({ navigation }) {
     }, []);
     return (
         <View>
-            {isLoading ? (<ActivityIndicator />) : (
             <FlatList data={data} renderItem={({ item }) => <Food navigation={navigation} item={item}></Food>}>
-            </FlatList>)}
+            </FlatList>
         </View>
 
     )

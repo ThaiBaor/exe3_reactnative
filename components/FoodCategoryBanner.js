@@ -1,9 +1,9 @@
 import React from "react";
 import { View,Image, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function FoodCategoryBanner({ scr }) {
+export default function FoodCategoryBanner({ scr,onPress }) {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
                 <Image style={styles.image} source={scr}/>
                 </View>

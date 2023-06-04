@@ -1,9 +1,9 @@
 import React from "react";
 import { View,Image, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function RecommendedFood({ scr }) {
+export default function RecommendedFood({ scr,onPress }) {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
             <Image style={styles.image} source={scr}/>
             </View>            
