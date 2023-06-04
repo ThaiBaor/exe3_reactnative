@@ -109,9 +109,9 @@ const App = () => {
     const select =(id, name, des, pri, id_cate, img)=>{
         setId(id);
         setName(name);
-        setPrice(pri);
+        setPrice(pri+"");
         setDescription(des);
-        setIdCategory(id_cate);
+        setIdCategory(id_cate+"");
         setImage(img);
     }
 
@@ -120,7 +120,7 @@ const App = () => {
     }, []);
 
     return (
-        <View style={{ flex: 1, padding: 24, paddingTop: 50, height: 100 }}>
+        <View style={{ flex: 1, padding: 24, paddingTop: 10, height: 100 }}>
             <Text style={{margin: 5, padding: 5}}>ID: {id_food}</Text>
             <TextInput
                 style={styles.textInput}
@@ -134,18 +134,20 @@ const App = () => {
                 placeholder="Description"
                 onChangeText={(text) => setDescription(text)}
             />
+            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
             <TextInput
-                style={styles.textInput}
+                style={styles.cate_price_input}
                 value={price}
                 placeholder="Price"
                 onChangeText={(text) => setPrice(text)}
             />
             <TextInput
-                style={styles.textInput}
+                style={styles.cate_price_input}
                 value={idCategory}
                 placeholder="Id catagory"
                 onChangeText={(text) => setIdCategory(text)}
             />
+            </View>
             <TextInput
                 style={styles.textInput}
                 value={image}
@@ -180,7 +182,7 @@ const App = () => {
                                         Description: {item.description}
                                     </Text>
                                     <Text key={item.price}>
-                                        Price: {item.price}$
+                                        Price: {Intl.NumberFormat('vi-VN',{ style: 'currency', currency: 'VND' }).format(item.price)}
                                     </Text>
                                     <View style={styles.containerNut}>
                                     <TouchableOpacity style={styles.nutXoa} onPress={() => deletefood(item.id_food)}><Text>Delete</Text></TouchableOpacity>
@@ -201,6 +203,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 5,
         margin: 5,
+    },
+    cate_price_input: {
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 5,
+        margin: 5,
+        width: '45%'
     },
     containerNut: {
         flexDirection: 'row',

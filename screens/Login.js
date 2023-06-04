@@ -75,10 +75,10 @@ export default function Login() {
         navigation.navigate('Home')
     };
     forgotPass = () => {
-        navigation.navigate('ForgotPass')
+        navigation.navigate('Forgot password')
     };
     signup = () => {
-        navigation.navigate('Signup')
+        navigation.navigate('Sign up')
     };
 
     facebook = () => {

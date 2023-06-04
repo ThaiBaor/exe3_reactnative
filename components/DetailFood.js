@@ -84,7 +84,7 @@ const DetailFood = ({route}) => {
         <View style={{ alignItems: 'center', }}>
           <Text style={styles.nameDetail}>{name}</Text>
           <Text style={styles.description}>{description}</Text>
-          <Text style={styles.nameDetail}>{price}$</Text>
+          <Text style={styles.nameDetail}>{Intl.NumberFormat('vi-VN',{ style: 'currency', currency: 'VND' }).format(price)}</Text>
         </View>
         <View>
           <Text style={styles.note}>Special Instruction</Text>
