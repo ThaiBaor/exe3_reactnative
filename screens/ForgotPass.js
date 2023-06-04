@@ -20,7 +20,7 @@ export default function Forgot() {
         alert('Email: ' + email);
     };
     signup = () => {
-        navigation.navigate('Signup')
+        navigation.navigate('Sign Up')
     };
     return (
         <ScrollView showsVerticalScrollIndicator={false}>

@@ -10,13 +10,13 @@ import {
     ScrollView,
 } from 'react-native';
 import axios from 'axios';
+import '../components/global.js'
 import Constants from "expo-constants";
 const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 
 export default function Login() {
     const navigation = useNavigation();
-
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
 
@@ -31,7 +31,6 @@ export default function Login() {
             .then (response => {
                 // Xử lý phản hồi từ API sau khi đăng nhập thành công
                 const { data } = response;
-
                 if (data.data.length === 0) {
                     alert('Email hoặc Password sai\nVui lòng kiểm tra lại tên đăng nhập và mật khẩu.');
                 } else {
@@ -72,10 +71,10 @@ export default function Login() {
         navigation.navigate('Home')
     };
     forgotPass = () => {
-        navigation.navigate('ForgotPass')
+        navigation.navigate('Forgot Password')
     };
     signup = () => {
-        navigation.navigate('Signup')
+        navigation.navigate('Sign Up')
     };
 
     facebook = () => {

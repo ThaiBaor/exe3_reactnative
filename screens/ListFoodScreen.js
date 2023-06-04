@@ -46,8 +46,6 @@ export default function ListFood({ navigation }) {
             const response = await fetch(`${uri}/category/id/food?id_category=${id_category}`);
             const json = await response.json();
             setData(json.data);
-            console.log(id_category);
-            console.log(data);
         } catch (error) {
             console.error(error);
         } finally {
@@ -57,7 +55,7 @@ export default function ListFood({ navigation }) {
         getFoodById_category();
     }, []);
     return (
-        <FlatList data={data} renderItem={({ item }) => <Food item={item} onPress={() => navigation.navigate('DetailFood')}></Food>}>
+        <FlatList data={data} renderItem={({ item }) => <Food item={item} onPress={() => navigation.navigate({name: 'Detail Food',params:{id_food: item.id_food}})}></Food>}>
         </FlatList>
     )
 }

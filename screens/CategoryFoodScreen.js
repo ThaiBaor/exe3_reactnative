@@ -48,7 +48,7 @@ export default function CategoryFoodScreen({navigation}) {
                 showsHorizontalScrollIndicator={false}
                 data={foodCategories}
                 renderItem={({ item, index }) =>
-                    (<CategoryFood item={item} index={index} onPress={()=>navigation.navigate({name:"FoodList",params:{id_category: item.id}})}></CategoryFood>)
+                    (<CategoryFood item={item} index={index} onPress={()=>navigation.navigate({name:"Food List",params:{id_category: item.id}})}></CategoryFood>)
                 }
             />       
     )
