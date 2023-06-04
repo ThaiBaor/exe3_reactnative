@@ -80,6 +80,7 @@ app.put('/update', function (req, res) {
 })
 
 /*------------------------------------------------------------Get API user------------------------------------------------------------*/
+const bcrypt = require('bcryptjs');
 app.get('/user', function (req, res) {
     dbcon.query('SELECT * FROM user', function (err, result) {
         if (err) throw err;
@@ -103,12 +104,31 @@ app.post('/email', function (req, res) {
     })
 })
 
-app.post('/login', function (req, res) {
+app.post('/login', async function (req, res) {
     const email = req.query.email;
     const pass = req.query.pass;
-    dbcon.query('SELECT * FROM user where email=? AND password=?', [email, pass], function (err, results) {
-        if (err) throw err;
-        return res.send({ data: results })
+    dbcon.query('SELECT * FROM user where email=?', email, async function (err, results) {
+        if (results.length === 0) {
+            // Không tìm thấy người dùng với email đã cung cấp
+            return res.status(404).send('User not found');
+        }
+
+        const hash = results[0].password;
+
+        try {
+            const match = await bcrypt.compare(pass, hash);
+
+            if (match) {
+                // Mật khẩu khớp, đăng nhập thành công
+                return res.send({ data: results });
+            } else {
+                // Mật khẩu không khớp
+                return res.status(401).send('Invalid password');
+            }
+        } catch (error) {
+            console.error('Error comparing passwords:', error);
+            return res.status(500).send('Error comparing passwords');
+        }
     })
 })
 
@@ -118,10 +138,14 @@ app.post('/them', function (req, res) {
     let phone = req.query.phone;
     let email = req.query.email;
     let admin = req.query.admin;
-    dbcon.query('Insert into user(username, password, phone, email, admin) values(?, ?, ?, ?, ?)', [name, password, phone, email, admin], function (err, result) {
-        if (err) throw err;
-        return res.send({ data: result, message: "Da them" })
-    })
+    //saltRounds are typically set to 12
+    const saltRounds = 10;
+    bcrypt.hash(password, saltRounds, function (err, hash) {
+        dbcon.query('Insert into user(username, password, phone, email, admin) values(?, ?, ?, ?, ?)', [name, hash, phone, email, admin], function (err, result) {
+            if (err) throw err;
+            return res.send({ data: result, message: "Da them" })
+        })
+    });
 })
 app.delete('/xoa', function (req, res) {
     let id = req.query.id;

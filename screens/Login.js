@@ -10,6 +10,7 @@ import {
     ScrollView,
 } from 'react-native';
 import axios from 'axios';
+import bcrypt from 'bcryptjs';
 import Constants from "expo-constants";
 const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
@@ -28,7 +29,7 @@ export default function Login() {
                 pass: pass
             }
         })
-            .then (response => {
+            .then ( async (response) => {
                 // Xử lý phản hồi từ API sau khi đăng nhập thành công
                 const { data } = response;
 
@@ -39,8 +40,10 @@ export default function Login() {
                     const userpass = data.data[0].password;
                     const admin = data.data[0].admin;
 
+                    let hashpass = await bcrypt.compare(pass, userpass);
+
                     // kiểm tra user nhập dữ liệu
-                    if (useremail == email && userpass == pass) {
+                    if (useremail == email && hashpass) {
                         // kiểm tra quyền user
                         if (admin == 0) {
                             alert('Đăng nhập thành công');

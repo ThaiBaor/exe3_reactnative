@@ -3,8 +3,11 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import { FoodStackScreen } from "./NativeStack";
-import {FoodStackScreen} from "./NativeStack";
+// import {FoodStackScreen} from "./NativeStack";
 import { CartStackScreen } from "./CartStack";
+
+import Login from "../screens/Login";
+import Signin from "../screens/Signin";
 
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
@@ -42,6 +45,15 @@ const Tabs = () => {
             }
             }></Tab.Screen>
             <Tab.Screen  name="Cart" component={CartStackScreen} options={{
+                tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactivecart.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activecart.png')} style={{ width: 25, height: 25 }}></Image>)
+            }
+            }></Tab.Screen>
+
+            <Tab.Screen name="Login" component={Login} options={{
+                tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactiveuser.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activeuser.png')} style={{ width: 25, height: 25 }}></Image>)
+            }
+            }></Tab.Screen>
+            <Tab.Screen  name="Signin" component={Signin} options={{
                 tabBarIcon: ({ focused }) => !focused ? (<Image source={require('../assets/icons/inactivecart.png')} style={{ width: 25, height: 25 }}></Image>) : (<Image source={require('../assets/icons/activecart.png')} style={{ width: 25, height: 25 }}></Image>)
             }
             }></Tab.Screen>
