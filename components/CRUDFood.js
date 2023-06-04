@@ -94,7 +94,7 @@ const App = () => {
     };
 
     const navi = () =>{
-        navigation.navigate('DetailFood');
+        navigation.navigate('Detail Food');
     }
 
     useEffect(() => {
@@ -168,7 +168,7 @@ const App = () => {
                                 Image: {item.image}
                             </Text>
                             <TouchableOpacity onPress={()=>deletefood(item.id_food)}><Text>Xoa</Text></TouchableOpacity> 
-                            <TouchableOpacity onPress={()=>navigation.navigate('DetailFood')}><Text>chon</Text></TouchableOpacity> 
+                            <TouchableOpacity onPress={()=>navigation.navigate('Detail Food')}><Text>chon</Text></TouchableOpacity> 
                         </TouchableOpacity>
                     )}
                 />
