@@ -57,7 +57,11 @@ export default function ListFood({ navigation }) {
         getFoodById_category();
     }, []);
     return (
-        <FlatList data={data} renderItem={({ item }) => <Food item={item} onPress={() => navigation.navigate('DetailFood')}></Food>}>
-        </FlatList>
+        <View>
+            {isLoading ? (<ActivityIndicator />) : (
+            <FlatList data={data} renderItem={({ item }) => <Food navigation={navigation} item={item}></Food>}>
+            </FlatList>)}
+        </View>
+
     )
 }
