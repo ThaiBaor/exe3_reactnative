@@ -3,7 +3,6 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import { FoodStackScreen } from "./NativeStack";
-import {FoodStackScreen} from "./NativeStack";
 import { CartStackScreen } from "./CartStack";
 
 const Tab = createBottomTabNavigator();

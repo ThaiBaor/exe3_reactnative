@@ -50,7 +50,8 @@ const App = () => {
         }
     }
     const add = async (name, description, price, idCategory, image) => {
-        setLoading(true);
+        if(name != '' && description != '' && price!= '' && idCategory!= ''&& image != ''){
+            setLoading(true);
         try {
             const response = await axios.post(`${uri}/create`, null, {
                 params: {
@@ -69,13 +70,19 @@ const App = () => {
             alert(error);
             setLoading(false);
         }
+        }
+        else{
+            alert("Vui lòng nhập đầy đủ dữ liệu")
+        }
+        
     };
-    const updateFood = async (id_food,name, description, price, idCategory, image) => {
-        setLoading(true);
+    const updateFood = async (id,name, description, price, idCategory, image) => {
+        if(name != '' && description != '' && price!= '' && idCategory!= ''&& image != ''){
+            setLoading(true);
         try {
             const response = await axios.put(`${uri}/update`, null, {
                 params: {
-                    id_food: id_food,
+                    id_food: id,
                     name: name,
                     price: price,
                     description: description,
@@ -88,13 +95,18 @@ const App = () => {
             })
         }
         catch (error) {
+
             alert(error);
             setLoading(false);
         }
+        }
+        else{
+            alert("Vui lòng nhập đầy đủ dữ liệu")
+        }
+        
     };
 
     const select =(id, name, des, pri, id_cate, img)=>{
-        setLoading(true);
         setId(id);
         setName(name);
         setPrice(pri);
@@ -109,7 +121,7 @@ const App = () => {
 
     return (
         <View style={{ flex: 1, padding: 24, paddingTop: 50, height: 100 }}>
-            <Text style={{margin:5, padding:5}}>ID: {id_food}</Text>
+            <Text style={{margin: 5, padding: 5}}>ID: {id_food}</Text>
             <TextInput
                 style={styles.textInput}
                 value={name}
@@ -131,7 +143,7 @@ const App = () => {
             <TextInput
                 style={styles.textInput}
                 value={idCategory}
-                placeholder="Id category"
+                placeholder="Id catagory"
                 onChangeText={(text) => setIdCategory(text)}
             />
             <TextInput
@@ -141,7 +153,7 @@ const App = () => {
                 onChangeText={(text) => setImage(text)}
             />
 
-            <View style={styles.containerNut}>
+<View style={styles.containerNut}>
                 <TouchableOpacity style={styles.nutThem} onPress={() => add(name, description, price, idCategory, image)}>
                     <Text>ADD</Text>
                 </TouchableOpacity>
@@ -176,21 +188,6 @@ const App = () => {
                                     </View>
                                 </View>
                             </View>
-                            /* <Text key={item.name}>
-                                Name: {item.name}
-                            </Text>
-                            <Text key={item.description}>
-                                Description: {item.description}
-                            </Text>
-                            <Text key={item.price}>
-                                Price: {item.price}
-                            </Text><Text key={item.id_category}>
-                                Category: {item.id_category}
-                            </Text><Text key={item.image}>
-                                Image: {item.image}
-                            </Text>
-                            <TouchableOpacity onPress={()=>deletefood(item.id_food)}><Text>Xoa</Text></TouchableOpacity> 
-                            <TouchableOpacity onPress={()=>navigation.navigate('DetailFood')}><Text>chon</Text></TouchableOpacity> 
                         </TouchableOpacity>
                     )}
                 />
@@ -198,7 +195,6 @@ const App = () => {
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     textInput: {
         borderWidth: 2,
@@ -267,6 +263,5 @@ const styles = StyleSheet.create({
         width: 190,
     },
 })
-
 
 export default App;
