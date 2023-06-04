@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import axios from 'axios';
 import Constants from "expo-constants";
@@ -23,12 +24,13 @@ const DetailFood = () => {
       const response = await fetch(`${uri}/getfoodbyid?id_food=1`);
       const json = await response.json();
       setData(json.data);
-      setIdFood = data[0].id_food;
-      setName = data[0].name;
-      setDescription = data[0].description;
-      setPrice = data[0].price;
-      setIdCategory = data[0].id_category;
-      setImage = data[0].image;
+      setIdFood(json.data[0].id_food);
+      setName(json.data[0].name);
+      setDescription(json.data[0].description);
+      setPrice(json.data[0].price);
+      setIdCategory(json.data[0].id_category);
+      setImage(json.data[0].image);
+      
       
     } catch (error) {
       console.error(error);
@@ -61,6 +63,7 @@ const DetailFood = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getFood();
     console.log(data);
@@ -72,9 +75,9 @@ const DetailFood = () => {
       </View>
       <Image style={styles.imageDetail} source={require('../assets/images/burger.jpg')} />
       <View style={{ alignItems: 'center', }}>
-        <Text style={styles.nameDetail}></Text>
-        <Text style={styles.description}></Text>
-        <Text style={styles.nameDetail}></Text>
+        <Text style={styles.nameDetail}>{name}</Text>
+        <Text style={styles.description}>{description}</Text>
+        <Text style={styles.nameDetail}>{price}$</Text>
       </View>
       <View>
         <Text style={styles.note}>Special Instruction</Text>

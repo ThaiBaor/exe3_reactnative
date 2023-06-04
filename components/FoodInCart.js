@@ -2,9 +2,26 @@
 import React from "react";
 import { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput } from "react-native";
-
-export default function FoodInCart({item, remove}) {
+import Constants from "expo-constants";
+import axios from 'axios';
+const { manifest } = Constants;
+const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
+export default function FoodInCart({item, getCart}) {
     const [qty, setQty] = useState(1);
+    const deleteCart = async (id) => {
+        try {
+            const response = await axios.delete(`${uri}/deletecart`, {
+                params: {
+                    id_food: id
+                }
+            }).then(response => {
+                alert('da xoa'); 
+            })
+        }
+        catch (error) {
+            alert(error);
+        }
+    }
     const increase=()=>{
         if (qty < 99){
             setQty(qty+1);
@@ -29,15 +46,16 @@ export default function FoodInCart({item, remove}) {
             <View style={styles.container_content_right}>
                 <Text style={styles.text}>{item.name}</Text>
                 <Text style={styles.text}>{item.price}</Text>
+                <Text style={styles.text}>{item.numberoffood}</Text>
                 <View style={styles.interact_bar}>
-                    <TouchableOpacity onPress={increase}>
+                    {/* <TouchableOpacity onPress={increase}>
                         <Image style={styles.plus_icon} source={require('../assets/icons/plus.png')}></Image>
-                    </TouchableOpacity>
-                    <TextInput onChangeText={({text})=>input(text)} keyboardType="numeric" maxLength={2}  onEndEditing={setQty} editable={false}>{qty}</TextInput>
-                    <TouchableOpacity onPress={decrease}>
+                    </TouchableOpacity> */}
+                    {/* <TextInput onChangeText={({text})=>input(text)} keyboardType="numeric" maxLength={2}  onEndEditing={setQty} editable={false}>{qty}</TextInput> */}
+                    {/* <TouchableOpacity onPress={decrease}>
                         <Image style={styles.minus_icon} source={require('../assets/icons/minus.png')}></Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={remove}>
+                    </TouchableOpacity> */}
+                    <TouchableOpacity onPress={()=>deleteCart(item.id_food)}>
                         <Image style={styles.close_icon} source={require('../assets/icons/close.png')}></Image>
                     </TouchableOpacity>
                 </View>

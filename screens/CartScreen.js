@@ -2,37 +2,40 @@ import react from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { FlatList, TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import Constants from "expo-constants";
+import axios from 'axios';
+const { manifest } = Constants;
+const uri = `http://${manifest.debuggerHost.split(':').shift()}:3000`;
 import FoodInCart from '../components/FoodInCart';
 export default function CartScreen() {
     const [selectedId, setSelectedId] = useState(0);
-    const [data, setData] = useState([{
-        name: "Chicken burger",
-        price: 70000,
-        image: require('../assets/images/burger.jpg')
-    },
-    {
-        name: "Fish burger",
-        price: 60000,
-        image: require('../assets/images/fish_burger.jpg')
-    },
-    {
-        name: "Grilled onion burger",
-        price: 40000,
-        image: require('../assets/images/onion_burger.jpg')
-    },
-    {
-        name: "Cheese burger",
-        price: 50000,
-        image: require('../assets/images/cheese_burger.jpg')
-    },
-    {
-        name: "BBQ bacon burger",
-        price: 90000,
-        image: require('../assets/images/bbq_burger.jpg')
-    },]);
+    const [data, setData] = useState([]);
     const [discount, setDiscount] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
     const [total, setTotal] = useState(0);
+    let getCart = async () => {
+        try {
+          const response = await fetch(`${uri}/cartuser?id_user=1`);
+          const json = await response.json();
+          setData(json.data); 
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      const clearCart = async (id_user) => {
+        try {
+            const response = await axios.delete(`${uri}/clearcart`, {
+                params: {
+                    id_user: id_user
+                }
+            }).then(response => {
+                alert('da xoa'); 
+            })
+        }
+        catch (error) {
+            alert(error);
+        }
+    }
     const getSubTotal=()=>{
         var result=0;
         data.forEach(element => {
@@ -68,13 +71,14 @@ export default function CartScreen() {
         }
     }
     useEffect(() => {
+        getCart();
         getSubTotal();
         getTotal();
     }, []);
     return (
         <View style={styles.container}>
             <View style={styles.list}>
-                <FlatList showsVerticalScrollIndicator={false} data={data} extraData={selectedId} renderItem={({ item }) => <FoodInCart item={item} ></FoodInCart>}>
+                <FlatList showsVerticalScrollIndicator={false} data={data} getCart={getCart()} extraData={selectedId} renderItem={({ item }) => <FoodInCart item={item} ></FoodInCart>}>
                 </FlatList>
             </View>
             <View style={styles.invoice_info_container}>
@@ -86,7 +90,7 @@ export default function CartScreen() {
                 <TouchableOpacity>
                     <Text style={styles.pay}>Pay</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={clear}>
+                <TouchableOpacity onPress={()=>clearCart(1)}>
                     <Text style={styles.clear}>Clear</Text>
                 </TouchableOpacity>
             </View>
