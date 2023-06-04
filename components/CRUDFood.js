@@ -176,7 +176,7 @@ const App = () => {
                                     </View>
                                 </View>
                             </View>
-                            {/* <Text key={item.name}>
+                            /* <Text key={item.name}>
                                 Name: {item.name}
                             </Text>
                             <Text key={item.description}>
@@ -189,8 +189,8 @@ const App = () => {
                             </Text><Text key={item.image}>
                                 Image: {item.image}
                             </Text>
-                            <TouchableOpacity onPress={() => deletefood(item.id_food)}><Text>Xoa</Text></TouchableOpacity>
-                            <TouchableOpacity onPress={() => navigation.navigate('DetailFood')}><Text>chon</Text></TouchableOpacity> */}
+                            <TouchableOpacity onPress={()=>deletefood(item.id_food)}><Text>Xoa</Text></TouchableOpacity> 
+                            <TouchableOpacity onPress={()=>navigation.navigate('DetailFood')}><Text>chon</Text></TouchableOpacity> 
                         </TouchableOpacity>
                     )}
                 />
